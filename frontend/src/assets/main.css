@@ -1,0 +1,20 @@
+:root {
+  --v-background-base: #121212;
+}
+
+/* Palette di colori scura */
+.v-application {
+  background-color: var(--v-background-base);
+}
+
+.theme--dark.v-application {
+  background-color: var(--v-background-base);
+}
+
+.v-card {
+  background-color: #212121; /* Colore di sfondo per le card */
+}
+
+.v-btn {
+  color: #ffffff; /* Colore del testo per i pulsanti */
+}
