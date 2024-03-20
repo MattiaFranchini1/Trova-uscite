@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../views/LoginView.vue';
+import Aule from '../views/AuleView.vue'
 import Home from '../views/HomeView.vue';
+import AuleDetails from '../views/AuleDetailsView.vue'
 import { useStore } from 'vuex';
 
 const router = createRouter({
@@ -18,10 +20,22 @@ const router = createRouter({
       component: Home,
       //meta: { requiresAuth: true },
     },
+    {
+      path: '/aule',
+      name: 'Aule',
+      component: Aule,
+      //meta: { requiresAuth: true },
+    },
+    {
+      path: '/aule-details/:identificatore',
+      name: 'AuleDetails',
+      component: AuleDetails,
+      //meta: { requiresAuth: true },
+    },
   ]
 });
 
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
   const store = useStore();
   const userProfile = store.state.userProfile;
 
@@ -32,6 +46,6 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
-});
+});*/
 
 export default router;
