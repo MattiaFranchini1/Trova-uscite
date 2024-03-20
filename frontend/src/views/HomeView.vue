@@ -2,8 +2,10 @@
     <div>
         <v-app style="background-color: #121212;">
             <v-app-bar app style="background-color: #333; color: white;">
-                <v-app-bar-nav-icon></v-app-bar-nav-icon>
                 <v-toolbar-title>TROVA USCITE</v-toolbar-title>
+                <a href="/aule" class="mr-5" style="text-decoration: none;color: white;">
+                    AULE
+                </a>
                 <v-spacer></v-spacer>
 
                 <v-avatar size="36" class="mr-5" v-if="profileDataLoaded" @click="openProfile">
@@ -12,7 +14,7 @@
                     </v-btn>
                 </v-avatar>
 
-                <v-menu v-model="menuOpen" offset-y transition="scale-transition">
+                <!-- <v-menu v-model="menuOpen" offset-y transition="scale-transition">
                     <v-list>
                         <v-list-item @click="logout">
                             <v-list-item-content class="text-center">
@@ -20,10 +22,22 @@
                             </v-list-item-content>
                         </v-list-item>
                     </v-list>
-                </v-menu>
+                </v-menu> -->
             </v-app-bar>
 
-            <v-container fluid>
+            <v-container fluid class="d-flex align-center justify-center" style="margin-top: 200px;color:white;">
+                <div v-if="profileDataLoaded" class="d-flex align-center" style="max-width: 800px;">
+                    <div class="mr-10">
+                        <v-img :src="profileAvatarTrimmed" alt="Avatar" class="rounded-circle" style="width: 500px; height: 500px;"></v-img>
+                    </div>
+                    <div class="ml-10">
+                        <h1>{{ userProfile.name }}</h1>
+                        <a :href="'mailto:' + userProfile.email">{{ userProfile.email }}</a>
+                        <h4>CLASSE: </h4>
+                        <h4>AULA: </h4>
+                        <h4>PUNTO DI RACCOLTA: </h4>
+                    </div>
+                </div>
             </v-container>
         </v-app>
     </div>
@@ -44,6 +58,13 @@ export default {
         userProfileAvatar() {
             return this.$store.state.userProfile.userInfo.picture;
         },
+        userProfile() {
+            //console.log(this.$store.state.userProfile.userInfo)
+            return this.$store.state.userProfile.userInfo;
+        },
+        profileAvatarTrimmed() {
+            return this.$store.state.userProfile.userInfo.picture.slice(0, -6);
+        }
     },
     mounted() {
         this.fetchProfileData();
