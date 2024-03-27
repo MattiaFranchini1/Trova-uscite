@@ -116,7 +116,7 @@ export default {
         },
         async fetchClasse() {
             try {
-                const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjA1NDg3NjgsImlhdCI6MTcxMDE4MDc2OCwiZGF0YSI6eyJ1c2VySWQiOiI2NWVmNDRjODNiNDIzN2RmMjQ4NjM3MDYiLCJlbWFpbCI6ImdhYnJpZWxlLmFyY3VyaUBpdGlzcGFsZW9jYXBhLml0IiwicGVybWlzc2lvbkxldmVsIjoxOH19.3k-n_jA559Xsbp5gDjXzw87MP6U07srQLAyt8y-v-7M';
+                const token = '<TOKEN>';
                 const email = this.$store.state.userProfile.userInfo.email;
                 const response = await axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/studenti/${email}`, {
                     headers: {
@@ -135,7 +135,7 @@ export default {
         },
         async fetchClassInfo() {
             try {
-                const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjA1NDg3NjgsImlhdCI6MTcxMDE4MDc2OCwiZGF0YSI6eyJ1c2VySWQiOiI2NWVmNDRjODNiNDIzN2RmMjQ4NjM3MDYiLCJlbWFpbCI6ImdhYnJpZWxlLmFyY3VyaUBpdGlzcGFsZW9jYXBhLml0IiwicGVybWlzc2lvbkxldmVsIjoxOH19.3k-n_jA559Xsbp5gDjXzw87MP6U07srQLAyt8y-v-7M';
+                const token = '<TOKEN>';
                 const classe = this.class;
                 const response = await axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/studenti/classe/${classe}`, {
                     headers: {
@@ -151,7 +151,7 @@ export default {
         },
         async fetchAula() {
             try {
-                const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjA1NDg3NjgsImlhdCI6MTcxMDE4MDc2OCwiZGF0YSI6eyJ1c2VySWQiOiI2NWVmNDRjODNiNDIzN2RmMjQ4NjM3MDYiLCJlbWFpbCI6ImdhYnJpZWxlLmFyY3VyaUBpdGlzcGFsZW9jYXBhLml0IiwicGVybWlzc2lvbkxldmVsIjoxOH19.3k-n_jA559Xsbp5gDjXzw87MP6U07srQLAyt8y-v-7M';
+                const token = '<TOKEN>';
                 const email = this.$store.state.userProfile.userInfo.email;
                 const currentHour = new Date().getHours();
                 const currentDay = new Date().getDay();
