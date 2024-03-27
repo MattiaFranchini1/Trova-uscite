@@ -1,5 +1,5 @@
 <template>
-    <v-container class="fill-height">
+    <v-container align="center" justify="center">
       <v-row align="center" justify="center" class="fill-height">
         <v-col cols="12" sm="8" md="6" class="d-flex align-center justify-center">
           <GoogleLoginCard />
