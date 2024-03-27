@@ -206,7 +206,7 @@ export default {
                 const response = await axios.get('http://localhost:3000/userInfo', { withCredentials: true });
                 this.$store.commit('setProfile', response.data);
 
-                if(this.$store.state.userProfile.userInfo.email !== 'franchini.mattia.studente@itispaleocapa.it' &&  this.$store.state.userProfile.userInfo.email !== 'gabriele.arcuri@itispaleocapa.it') {
+                if(this.$store.state.userProfile.userInfo.email !== 'rspp@itispaleocapa.it') {
                     this.$router.replace('/');
                 }
                 //await this.fetchClasse();
