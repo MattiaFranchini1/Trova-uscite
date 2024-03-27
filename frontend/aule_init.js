@@ -666,37 +666,58 @@ const aule = [
     {
         "ROOM_ID": 89,
         "Name": "E0-1",
-        "Longname": "pseudo aula per p. Elettr."
+        "Longname": "pseudo aula per p. Elettr.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 90,
         "Name": "E0-2",
-        "Longname": "pseudo aula per p. Elettr."
+        "Longname": "pseudo aula per p. Elettr.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 91,
         "Name": "I0-1",
-        "Longname": "pseudo aula per p. Inform."
+        "Longname": "pseudo aula per p. Inform.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 92,
         "Name": "M0-1",
-        "Longname": "pseudo aula per p.Mecc."
+        "Longname": "pseudo aula per p.Mecc.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 93,
         "Name": "M0-2",
-        "Longname": "pseudo aula per p. Mecc."
+        "Longname": "pseudo aula per p. Mecc.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 94,
         "Name": "M0-3",
-        "Longname": "pseudo aula per p. Mecc."
+        "Longname": "pseudo aula per p. Mecc.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 95,
         "Name": "T0-1",
-        "Longname": "pseudo aula per p. Tess."
+        "Longname": "pseudo aula per p. Tess.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 96,
@@ -709,17 +730,26 @@ const aule = [
     {
         "ROOM_ID": 97,
         "Name": "E0-3",
-        "Longname": "pseudo aula per p. Elettr."
+        "Longname": "pseudo aula per p. Elettr.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 98,
         "Name": "I0-2",
-        "Longname": "pseudo aula per p. Inform."
+        "Longname": "pseudo aula per p. Inform.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 99,
         "Name": "I0-3",
-        "Longname": "pseudo aula per p. Inform."
+        "Longname": "pseudo aula per p. Inform.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 100,
@@ -812,22 +842,34 @@ const aule = [
     {
         "ROOM_ID": 111,
         "Name": "PQU1",
-        "Longname": "Pal. Quar. 1"
+        "Longname": "Pal. Quar. 1",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 112,
         "Name": "PQU2",
-        "Longname": "Pal. Quar. 2"
+        "Longname": "Pal. Quar. 2",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 113,
         "Name": "I0-4",
-        "Longname": "pseudo aula per p. Inform."
+        "Longname": "pseudo aula per p. Inform.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 114,
         "Name": "I0-5",
-        "Longname": "pseudo aula per p. Inform."
+        "Longname": "pseudo aula per p. Inform.",
+        "Edificio": "a",
+        "Piano": "a",
+        "PuntoRaccolta": "ae"
     },
     {
         "ROOM_ID": 115,
