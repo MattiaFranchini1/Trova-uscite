@@ -83,6 +83,7 @@
                 <v-data-iterator :items="filteredAule" :items-per-page="3" :search="search">
                     <template v-slot:default="{ items }">
                         <v-container class="pa-2" fluid>
+                            <h1 style="text-align: center;">{{ this.studenti_totali }} STUDENTI TOTALI</h1>
                             <v-row dense>
                                 <v-col v-for="item in items" :key="item.raw.Longname" cols="auto" md="4">
                                     <v-card :style="{ backgroundColor: getColor(item.raw.PuntoRaccolta) }" class="pb-3"
@@ -142,6 +143,8 @@
                 </v-card-title>
                 <v-card-text>
                     <div v-if="selectedAula" style="text-align: center;">
+                        <p>CLASSE PRESENTE NELLA AULA: <strong>{{ this.classe }} ({{ this.studenti }} studenti)</strong>
+                        </p>
                         <p>Edificio: {{ selectedAula.Edificio }}</p>
                         <p>Piano: {{ selectedAula.Piano }}</p>
                         <img :src="getAulaImagePath(selectedAula)" alt="Aula Image" style="max-width: 100%;">
@@ -183,6 +186,9 @@ export default {
             dialogVisible: false,
             selectedAula: null,
             visible_card: false,
+            classe: '',
+            studenti: 0,
+            studenti_totali: 0,
         };
     },
     computed: {
@@ -206,7 +212,7 @@ export default {
                 const response = await axios.get('http://localhost:3000/userInfo', { withCredentials: true });
                 this.$store.commit('setProfile', response.data);
 
-                if(this.$store.state.userProfile.userInfo.email !== 'rspp@itispaleocapa.it') {
+                if (this.$store.state.userProfile.userInfo.email !== 'rspp@itispaleocapa.it' && this.$store.state.userProfile.userInfo.email !== 'gabriele.arcuri@itispaleocapa.it') {
                     this.$router.replace('/');
                 }
                 //await this.fetchClasse();
@@ -253,21 +259,72 @@ export default {
         handleButtonClick(color) {
             this.visible_card = true;
             this.filteredAule = auleInit.filter(aula => aula.PuntoRaccolta.split(' ')[1] == color);
-            //console.log(this.filteredAule);
+            console.log(this.filteredAule);
+            this.studenti_totali = 0;
+            for (let i = 0; i < this.filteredAule.length; i++) {
+                const currentHour = new Date().getHours();
+                //console.log(currentHour - 7)
+                const currentDay = new Date().getDay();
+                
+
+                axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
+                    .then(response => {
+                        console.log(response.data);
+                        const classe_tot = response.data.classe;
+                        axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/v1/studenti/classe/${classe_tot}`, { headers: { Authorization: `Bearer ${token}` } })
+                            .then(response => {
+                                console.log(response.data);
+                                this.studenti_totali = response.data.studenti + this.studenti_totali;
+                            })
+                            .catch(error => {
+                                console.error('Errore nella chiamata API:', error);
+                            });
+                    })
+                    .catch(error => {
+                        console.error('Errore nella chiamata API:', error);
+                    });
+            }
+
         },
         checkIfMobile() {
             this.isMobile = window.innerWidth <= 768;
         },
-        openDialog(aula) {
+        openDialog(aula, classe) {
             this.selectedAula = aula;
             console.log(this.selectedAula);
+            console.log(this.classe);
             this.dialogVisible = true;
         },
         closeDialog() {
             this.dialogVisible = false;
         },
         handleCardClick(aula) {
-            this.openDialog(aula);
+            const currentHour = new Date().getHours();
+            //console.log(currentHour - 7)
+            const currentDay = new Date().getDay();
+            
+            const url = `https://sipal.itispaleocapa.it/api/proxySipal/v1/studenti/classe/${currentDay}/${(currentHour - 7)}/${aula.Name}`;
+
+            axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
+                .then(response => {
+                    console.log(response.data);
+                    this.classe = response.data.classe;
+                    axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/v1/studenti/classe/${this.classe}`, { headers: { Authorization: `Bearer ${token}` } })
+                        .then(response => {
+                            console.log(response.data);
+                            this.studenti = response.data.studenti ? response.data.studenti : 0;
+                            this.openDialog(aula, response.data);
+                        })
+                        .catch(error => {
+                            console.error('Errore nella chiamata API:', error);
+                        });
+                })
+                .catch(error => {
+                    console.error('Errore nella chiamata API:', error);
+                    this.classe = "Nessuna classe in questa aula";
+                    this.studenti = 0;
+                    this.openDialog(aula, "Nessuna classe in questa aula");
+                });
         },
         getAulapointImagePath(aula) {
             console.log()
