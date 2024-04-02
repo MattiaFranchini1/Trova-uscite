@@ -47,10 +47,12 @@
 
         <!-- Grafica per desktop -->
         <v-container v-if="!isMobile">
-            <v-container class="d-flex align-center justify-center" style="margin-top: 5%; height: 20%; width: 60%;">
-                <v-card class="mx-auto custom-width" outlined
-                    style="width: 100%; height: 100%; background-color: orange; position: relative;">
-                    <v-card-text class="text-center align-center">
+            <v-container class="d-flex align-center justify-center" style="margin-top: 5%; height: 30%; width: 60%;">
+                <v-card class="mx-auto custom-width" outlined style="width: 100%; height: 100%; position: relative;">
+                    <img src="/images/centrale.jpg" alt="Centrale"
+                        style="width: 100%; height: 100%; object-fit: cover;">
+                    <v-card-text class="text-center align-center justify-center"
+                        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px; font-weight: bold; color: white;">
                         PALAZZINA CENTRALE
                     </v-card-text>
                     <v-btn @click="redirectToAula('edificio centrale')"
@@ -60,11 +62,12 @@
                 </v-card>
             </v-container>
 
+
             <v-container class="d-flex" style="margin-top: 20px; width: 60%;">
-                <v-card class="mx-3" outlined
-                    style="width: 300px; height: 300px; background-color: red; position: relative; display: flex; justify-content: center; align-items: center;">
-                    <v-card-text class="text-center" style="font-weight: bold;">
-                        PALAZZINA ELETTRONICA
+                <v-card class="mx-3" outlined image="/images/elettronica.jpg"
+                    style="width: 300px; height: 300px; position: relative; display: flex; justify-content: center; ">
+                    <v-card-text class="text-center" style="font-size: 24px; font-weight: bold; color: black;">
+                        ELETTRONICA
                     </v-card-text>
                     <v-btn @click="redirectToAula('Elettronica')"
                         style="position: absolute; right: 10px; bottom: 10px;">
@@ -72,10 +75,10 @@
                     </v-btn>
                 </v-card>
                 <v-spacer></v-spacer>
-                <v-card class="mx-3" outlined
-                    style="width: 300px; height: 300px; background-color: purple; position: relative; display: flex; justify-content: center; align-items: center;">
-                    <v-card-text class="text-center" style="font-weight: bold;">
-                        PALAZZINA TESSILE
+                <v-card class="mx-3" outlined image="/images/tessile.jpg"
+                    style="width: 300px; height: 300px; position: relative; display: flex; justify-content: center;">
+                    <v-card-text class="text-center" style="font-size: 24px; font-weight: bold; color: black;">
+                        TESSILE
                     </v-card-text>
                     <v-btn @click="redirectToAula('Tessile')" style="position: absolute; right: 10px; bottom: 10px;">
                         <v-icon>mdi-arrow-right</v-icon>
@@ -86,20 +89,20 @@
 
 
             <v-container class="d-flex" style="margin-top: 20px; width: 60%;">
-                <v-card class="mx-3" outlined
-                    style="width: 300px; height: 300px; background-color: yellow; position: relative; display: flex; justify-content: center; align-items: center;">
-                    <v-card-text class="text-center" style="font-weight: bold;">
-                        PALAZZINA MECCANICA
+                <v-card class="mx-3" outlined image="/images/meccanica.jpg"
+                    style="width: 300px; height: 300px; position: relative; display: flex; justify-content: center;">
+                    <v-card-text class="text-center" style="font-size: 24px; font-weight: bold; color: black;">
+                        MECCANICA
                     </v-card-text>
                     <v-btn @click="redirectToAula('Meccanica')" style="position: absolute; right: 10px; bottom: 10px;">
                         <v-icon>mdi-arrow-right</v-icon>
                     </v-btn>
                 </v-card>
                 <v-spacer></v-spacer>
-                <v-card class="mx-3" outlined
-                    style="width: 300px; height: 300px; background-color: green; position: relative; display: flex; justify-content: center; align-items: center;">
-                    <v-card-text class="text-center" style="font-weight: bold;">
-                        PALAZZINA INFORMATICA
+                <v-card class="mx-3" outlined image="/images/informatica.jpg"
+                    style="width: 300px; height: 300px; position: relative; display: flex; justify-content: center;">
+                    <v-card-text class="text-center" style="font-size: 24px; font-weight: bold; color: black;">
+                        INFORMATICA
                     </v-card-text>
                     <v-btn @click="redirectToAula('Informatica')"
                         style="position: absolute; right: 10px; bottom: 10px;">
@@ -109,11 +112,12 @@
             </v-container>
         </v-container>
 
-        <!-- Grafica per telefono -->
         <v-container v-else style="margin-top: 13%;">
             <v-row justify="center">
                 <v-col cols="12" v-for="(item, index) in buildings" :key="index">
-                    <v-card outlined class="mx-3 my-3" :style="{ 'background-color': item.color }">
+                    <v-card outlined class="mx-3 my-3">
+                        <img :src="item.image" alt="Building Image"
+                            style="width: 100%; height: auto; object-fit: cover;">
                         <v-card-text class="text-center" style="font-weight: bold;">
                             {{ item.name }}
                         </v-card-text>
@@ -124,6 +128,7 @@
                 </v-col>
             </v-row>
         </v-container>
+
     </v-app>
 </template>
 
@@ -135,11 +140,11 @@ export default {
         return {
             profileDataLoaded: false,
             buildings: [
-                { name: 'PALAZZINA CENTRALE', color: 'orange', redirect: 'edificio centrale' },
-                { name: 'PALAZZINA ELETTRONICA', color: 'red', redirect: 'Elettronica' },
-                { name: 'PALAZZINA TESSILE', color: 'purple', redirect: 'Tessile' },
-                { name: 'PALAZZINA MECCANICA', color: 'yellow', redirect: 'Meccanica' },
-                { name: 'PALAZZINA INFORMATICA', color: 'green', redirect: 'Informatica' }
+                { name: 'PALAZZINA CENTRALE', color: 'orange', redirect: 'edificio centrale', image: '/images/centrale.jpg' },
+                { name: 'PALAZZINA ELETTRONICA', color: 'red', redirect: 'Elettronica', image: '/images/elettronica.jpg' },
+                { name: 'PALAZZINA TESSILE', color: 'purple', redirect: 'Tessile', image: '/images/tessile.jpg' },
+                { name: 'PALAZZINA MECCANICA', color: 'yellow', redirect: 'Meccanica', image: '/images/meccanica.jpg' },
+                { name: 'PALAZZINA INFORMATICA', color: 'green', redirect: 'Informatica', image: '/images/informatica.jpg' }
             ],
             isMobile: false
         };
