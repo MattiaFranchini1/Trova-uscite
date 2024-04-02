@@ -47,24 +47,47 @@
             </v-app-bar>
 
 
-            <v-container fluid class="d-flex align-center justify-center" style="margin-top: 15%;color:white;">
-                <v-flex xs12 md8>
-                    <!-- Utilizza 12 colonne su dispositivi extra small e 8 colonne su dispositivi di dimensioni medie -->
-                    <div class="d-flex flex-column align-center">
-                        <v-img :src="profileAvatarTrimmed" alt="Avatar" class="rounded-circle mb-5"
-                            style="width: 100%; height: 100%;"></v-img>
-                        <h4 class="text-center">Ora attuale in Italia: {{ currentItalianTime }}</h4>
-                        <h1 class="text-center">{{ userProfile.name }}</h1>
-                        <v-chip :href="'mailto:' + userProfile.email" class="ma-2 text-center" color="cyan" label>
-                            <v-icon icon="mdi-email" start></v-icon>
-                            {{ userProfile.email }}
-                        </v-chip>
-                        <h4 class="text-center">CLASSE: {{ this.classInfo }}</h4>
-                        <h4 class="text-center">AULA: {{ aula }}</h4>
-                        <h4 class="text-center">PUNTO DI RACCOLTA: </h4>
-                    </div>
-                </v-flex>
-            </v-container>
+            <div v-if="isMobile">
+                <v-container fluid class="d-flex align-center justify-center" style="margin-top: 15%;color:white;">
+                    <v-flex xs12 md8>
+                        <!-- Utilizza 12 colonne su dispositivi extra small e 8 colonne su dispositivi di dimensioni medie -->
+                        <div class="d-flex flex-column align-center">
+                            <v-img :src="profileAvatarTrimmed" alt="Avatar" class="rounded-circle mb-5"
+                                style="width: 100%; height: 100%;"></v-img>
+                            <h4 class="text-center">Ora attuale in Italia: {{ currentItalianTime }}</h4>
+                            <h1 class="text-center">{{ userProfile.name }}</h1>
+                            <v-chip :href="'mailto:' + userProfile.email" class="ma-2 text-center" color="cyan" label>
+                                <v-icon icon="mdi-email" start></v-icon>
+                                {{ userProfile.email }}
+                            </v-chip>
+                            <h4 class="text-center">CLASSE: {{ this.classInfo }}</h4>
+                            <h4 class="text-center">AULA: {{ aula }}</h4>
+                            <h4 class="text-center">PUNTO DI RACCOLTA: {{ aulaInfo.PuntoRaccolta }}</h4>
+                        </div>
+                    </v-flex>
+                </v-container>
+            </div>
+
+            <div v-else>
+                <v-container fluid class="d-flex align-center justify-center" style="margin-top: 8%;color:white;">
+                    <v-flex xs12 md8>
+                        <!-- Utilizza 12 colonne su dispositivi extra small e 8 colonne su dispositivi di dimensioni medie -->
+                        <div class="d-flex flex-column align-center">
+                            <v-img :src="profileAvatarTrimmed" alt="Avatar" class="rounded-circle mb-5"
+                                style="width: 100%; height: 100%;"></v-img>
+                            <h4 class="text-center">Ora attuale in Italia: {{ currentItalianTime }}</h4>
+                            <h1 class="text-center">{{ userProfile.name }}</h1>
+                            <v-chip :href="'mailto:' + userProfile.email" class="ma-2 text-center" color="cyan" label>
+                                <v-icon icon="mdi-email" start></v-icon>
+                                {{ userProfile.email }}
+                            </v-chip>
+                            <h4 class="text-center">CLASSE: {{ this.classInfo }}</h4>
+                            <h4 class="text-center">AULA: {{ aula }}</h4>
+                            <h4 class="text-center">PUNTO DI RACCOLTA: {{ aulaInfo.PuntoRaccolta }}</h4>
+                        </div>
+                    </v-flex>
+                </v-container>
+            </div>
         </v-app>
     </div>
 </template>
@@ -72,6 +95,7 @@
 
 <script>
 import axios from 'axios';
+import auleData from '../../aule_init.js';
 
 export default {
     data() {
@@ -80,8 +104,10 @@ export default {
             menuOpen: false,
             currentItalianTime: '',
             class: '',
+            isMobile: false,
             aula: '',
             classInfo: '',
+            aulaInfo:'',
         };
     },
     // Altri metodi del componente...
@@ -97,6 +123,7 @@ export default {
         }
     },
     mounted() {
+        this.checkIfMobile();
         this.fetchProfileData();
         setInterval(this.updateItalianTime, 1000);
     },
@@ -107,6 +134,7 @@ export default {
                 this.$store.commit('setProfile', response.data);
                 console.log(this.$store.state.userProfile.userInfo.email)
                 await this.fetchClasse();
+                await this.fetchAula();
                 await this.fetchClassInfo();
                 this.profileDataLoaded = true;
             } catch (error) {
@@ -118,7 +146,7 @@ export default {
             try {
                 const token = '<TOKEN>';
                 const email = this.$store.state.userProfile.userInfo.email;
-                const response = await axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/studenti/${email}`, {
+                const response = await axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/v1/studenti/${email}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -137,7 +165,7 @@ export default {
             try {
                 const token = '<TOKEN>';
                 const classe = this.class;
-                const response = await axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/studenti/classe/${classe}`, {
+                const response = await axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/v1/studenti/classe/${classe}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -154,13 +182,18 @@ export default {
                 const token = '<TOKEN>';
                 const email = this.$store.state.userProfile.userInfo.email;
                 const currentHour = new Date().getHours();
+                //console.log(currentHour - 7)
                 const currentDay = new Date().getDay();
-                const response = await axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/studenti/classe/${currentDay}/${currentHour}/${email}`, {
+                const response = await axios.get(`https://sipal.itispaleocapa.it/api/proxySipal/v1/studenti/aula/${currentDay}/${currentHour - 7}/${email}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                this.aula = response.data.Aula;
+                console.log(response.data)
+                this.aula = response.data.aula;
+                console.log(this.aula)
+                this.aulaInfo = this.getAulaInfoByClass(this.aula);
+                console.log(this.aulaInfo)
             } catch (error) {
                 console.error('Errore durante il recupero dell\'aula:', error);
             }
@@ -175,6 +208,13 @@ export default {
                 console.error('Errore durante il logout:', error);
             }
         },
+        getAulaInfoByClass(alunnoClass) {
+            const foundAula = auleData.find(aula => aula.Name === alunnoClass);
+            return foundAula || null;
+        },
+        checkIfMobile() {
+            this.isMobile = window.innerWidth <= 768;
+        },
         openProfile() {
             console.log("Profile opened!");
             this.menuOpen = !this.menuOpen;
@@ -185,7 +225,7 @@ export default {
 
             if (currentHour >= 8 && currentHour <= 13) {
                 const hourIndex = Math.floor((currentHour - 8) / 1) + 1;
-                label = `(${this.convertToOrdinal(hourIndex)} ORA)`;
+                label = `${this.convertToOrdinal(hourIndex)} ORA`;
             } else {
                 label = 'Orario fuori scuola';
             }
