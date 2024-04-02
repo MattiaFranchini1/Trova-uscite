@@ -265,7 +265,8 @@ export default {
                 const currentHour = new Date().getHours();
                 //console.log(currentHour - 7)
                 const currentDay = new Date().getDay();
-                
+                const token = '<TOKEN>'
+                const url = `https://sipal.itispaleocapa.it/api/proxySipal/v1/studenti/classe/${currentDay}/${(currentHour - 7)}/${this.filteredAule[i].Name}`;
 
                 axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
                     .then(response => {
@@ -302,7 +303,7 @@ export default {
             const currentHour = new Date().getHours();
             //console.log(currentHour - 7)
             const currentDay = new Date().getDay();
-            
+            const token = '<TOKEN>';
             const url = `https://sipal.itispaleocapa.it/api/proxySipal/v1/studenti/classe/${currentDay}/${(currentHour - 7)}/${aula.Name}`;
 
             axios.get(url, { headers: { Authorization: `Bearer ${token}` } })
